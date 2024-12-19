@@ -19,31 +19,31 @@ interface SizeChartItem {
 const sizeChartData: SizeChartItem[] = [
   {
     "Size": "XS",
-    "Height Range (cm)": "134.62-203.2",
-    "Weight Range (kg)": "60-119",
+    "Height Range (cm)": "134.62-150.2",
+    "Weight Range (kg)": "40-52",
     "Chest/Bust": `32"-33"`,
     "Waist": `24"-25"`,
     "Hips": `34.5"-35.5"`
   },
   {
     "Size": "S",
-    "Height Range (cm)": "121.92-175.26",
-    "Weight Range (kg)": "67-119",
+    "Height Range (cm)": "150.92-158.26",
+    "Weight Range (kg)": "57-74",
     "Chest/Bust": `34"-35"`,
     "Waist": `26"-27"`,
     "Hips": `36"-37"`
   },
   {
     "Size": "M",
-    "Height Range (cm)": "154.94-210.82",
-    "Weight Range (kg)": "66-119",
+    "Height Range (cm)": "151.94-188.82",
+    "Weight Range (kg)": "69-77",
     "Chest/Bust": `36"-37"`,
     "Waist": `28"-29"`,
     "Hips": `38.5"-39.5"`
   },
   {
     "Size": "L",
-    "Height Range (cm)": "152.4-210.82",
+    "Height Range (cm)": "164.4-200.82",
     "Weight Range (kg)": "40-81",
     "Chest/Bust": `38.5"-40"`,
     "Waist": `30.5"-32"`,
@@ -51,10 +51,10 @@ const sizeChartData: SizeChartItem[] = [
   },
   {
     "Size": "XL",
-    "Height Range (cm)": "121.92-175.26",
+    "Height Range (cm)": "181.92-210.26",
     "Weight Range (kg)": "40-91",
     "Chest/Bust": `41.5"-43"`,
-    "Waist": `33.5"-35"` ,
+    "Waist": `33.5"-35"`,
     "Hips": `44"-45.5"`
   }
 ]

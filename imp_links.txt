@@ -1,0 +1,13 @@
+research paper
+https://www.mdpi.com/2227-7390/12/3/497
+https://www.researchgate.net/publication/241707278_A_statistical_model_for_developing_body_size_charts_for_garments
+https://etheses.whiterose.ac.uk/17688/1/eThesis_Hye-Won%20Lim.pdf
+
+canvas ppt
+https://www.canva.com/design/DAGTeMleIgs/SlgNupGBGVEJyMn5ui4EAA/edit
+
+Python notebook
+https://colab.research.google.com/drive/1lVf4-3RPnCT4YWETUvB4i9jSy4O2EKr5?usp=sharing
+
+github
+https://github.com/AkhileshJyotishi/sizeChart.ai

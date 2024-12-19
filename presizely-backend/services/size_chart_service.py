@@ -10,20 +10,16 @@ from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
 
 
-# Dummy in-memory data store for now (to be replaced with actual logic)
-results = {}  # Replace with actual detailed chart data
-generic_size_chart = {}  # Replace with computed generic chart
-analytics_data = {}  # Replace with cluster data for analytics
+results = {}  
+generic_size_chart = {}  
+analytics_data = {}  
 
-# Define cluster labels
 size_mapping = {0: 'Short-Small', 1: 'Short-Medium', 2: 'Short-Full', 3: 'Medium-Very Small', 4: 'Medium-Small',
                     5: 'Medium-Medium', 6: 'Medium-Full', 7: 'Tall-Very Small', 8: 'Tall-Small', 9: 'Tall-Medium',
                     10: 'Tall-Full'}
 
-# Initialize confidence scores for sizes
 default_confidence = {'S': 0.25, 'M': 0.25, 'L': 0.25, 'XL': 0.25}
 
-# Function to convert height from "feet'inches" to centimeters
 def convert_height_to_cm(height):
         try:
             feet, inches = map(int, height.replace('"', '').split("'"))
@@ -32,12 +28,11 @@ def convert_height_to_cm(height):
             return None
 
 def initialzeInmemoryDatabase():
-    # Load dataset
+
     print("initializing the database...")
-    file_path = 'dataset/generated_body_measurements_dataset.csv'  # Replace with the actual path if necessary
+    file_path = 'dataset/generated_body_measurements_dataset.csv'
     data = pd.read_csv(file_path)
 
-    # Clean and preprocess the data
     data['Height_cm'] = data['Height'].apply(convert_height_to_cm)
     data['Weight'] = pd.to_numeric(data['Weight'], errors='coerce')
     data['Bust/Chest'] = pd.to_numeric(data['Bust/Chest'], errors='coerce')
@@ -46,7 +41,6 @@ def initialzeInmemoryDatabase():
     data['Body Shape Index'] = pd.to_numeric(data['Body Shape Index'], errors='coerce')
     data['Gender'] = data['Gender'].str.lower()  # Normalize gender column
 
-    # Drop rows with missing critical data
     data = data.dropna(subset=['Height_cm', 'Weight', 'Bust/Chest', 'Waist', 'Hips', 'Body Shape Index', 'Gender'])
 
 
@@ -54,15 +48,12 @@ def initialzeInmemoryDatabase():
         for body_shape in data['Body Shape Index'].unique():
             subset = data[(data['Gender'] == gender) & (data['Body Shape Index'] == body_shape)]
 
-            if len(subset) > 11:  # Ensure enough data for clustering
-                # Select features for clustering
+            if len(subset) > 11:  
                 features = subset[['Height_cm', 'Weight', 'Bust/Chest', 'Waist', 'Hips']].values
 
-                # Perform clustering
                 kmeans = KMeans(n_clusters=11, random_state=42)
                 subset['Cluster'] = kmeans.fit_predict(features)
 
-                # Initialize confidence scores for each cluster
                 cluster_confidences = {
                     cluster: {
                         'Height': default_confidence.copy(),
@@ -99,13 +90,11 @@ def initialzeInmemoryDatabase():
 
 
 
-# Function to update confidence scores based on user feedback
 def update_confidence_scores():
 
     """
     Interactively update the confidence scores based on user feedback.
     """
-    # Get inputs from the user
     gender = input("Enter gender (Male/Female): ").strip().lower()
     body_shape = int(input("Enter body shape index (e.g., 0 for Short-Small): ").strip())
     cluster_label = int(input("Enter the cluster label: ").strip())
@@ -114,7 +103,6 @@ def update_confidence_scores():
     new_size = input("Enter the new correct size (S/M/L/XL): ").strip().upper()
     learning_rate = float(input("Enter the learning rate for the adjustment (default: 0.1): ").strip() or 0.1)
 
-    # Check if the inputs are valid
     key = (gender, body_shape)
     if key not in results:
         print("Data not available for this gender and body shape index.")
@@ -130,20 +118,17 @@ def update_confidence_scores():
         print("Invalid property name.")
         return
 
-   # Print before state
     print("\n**Before Update**")
     print(f"Cluster: {cluster_label}, Property: {property_name}")
     print(f"Confidence Scores: {confidence_scores}")
 
-    # Adjust confidence scores for the specified property
     confidence_scores[original_size] = max(0, confidence_scores[original_size] - learning_rate)
     confidence_scores[new_size] = min(1, confidence_scores[new_size] + learning_rate)
 
-    # Normalize confidence scores to ensure they sum to 1
     total = sum(confidence_scores.values())
     for size in confidence_scores:
         confidence_scores[size] /= total
-    # Print after state
+        
     print("\n**After Update**")
     print(f"Cluster: {cluster_label}, Property: {property_name}")
     print(f"Confidence Scores: {confidence_scores}")
